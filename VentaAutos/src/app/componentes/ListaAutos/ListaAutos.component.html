@@ -1,0 +1,101 @@
+
+<div class="card">
+  <div class="card-header" style="background-color: rgba(167, 199, 247, 0.726);">
+    <h3>{{titulo}}</h3> 
+  </div>
+    
+  <div class="card-body">
+    <div class="row">
+      <h4>Filtrar por:</h4>
+    </div>
+
+    <div class="col-md-3">
+      <input class="form-control">
+    </div>
+    <br>
+    <div class="row">
+      <div class="cols-6">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Nuevo</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <table class="table table-striped" style="background-color: rgba(141, 193, 236, 0.397);">
+      <thead>
+        <tr>
+          <th colspan="6">
+            <button class="btn btn-success" (click)="toggleImage()">
+              {{ muestraImagen ? "Oculta" : "Muestra " }} Imagen
+            </button>
+          </th>
+        </tr>
+            <tr>
+              <th>IMAGEN</th>
+              <th>MARCA</th>
+              <th>MODELO</th>
+              <th>AÑO</th>
+              <th>COLOR</th>
+              <th>kILOMETROS</th>
+              <th>PRECIO</th>
+              <th>CALIFICACION</th>
+              <th>ACCION</th>          
+            </tr>
+        </thead>
+        <tbody *ngFor="let vehiculo of listaAutos">
+      <tr>
+        <td>
+          <p><img [src]="vehiculo.Foto" style="width: 100px; height: 50px;" *ngIf="muestraImagen"></p>
+        </td>
+        <td>{{vehiculo.marca}}</td>
+        <td>{{vehiculo.modelo | lowercase}}</td>
+        <td>{{vehiculo.anio}}</td>
+        <td>{{vehiculo.color}}</td>
+        <td>{{vehiculo.kilometros | number}}</td>
+        <td>{{vehiculo.precio | currency}}</td>
+        <td>
+          <app-calificacion [calificacion]="vehiculo.Calificacion" (retorno)="mostrar($event)"></app-calificacion>
+        </td>
+
+        <td><button class="btn btn-danger" (click)="eliminarvehiculo(vehiculo)">Eliminar</button></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Datos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formularioVehiculo">
+        <div class="mb-3">
+          <label for="exampleFormControlCodigo" class="form-label">Marca</label>
+          <input type="email" class="form-control" id="FormControlMarca" FormControlName="marca">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlMarca" class="form-label">Modelo</label>
+          <input type="email" class="form-control" id="exampleFormControlModelo" FormControlName="modelo">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleFormControlModelo" class="form-label">Año</label>
+          <input type="email" class="form-control" id="FormControlAnio" FormControlName="año">
+        </div>
+      </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="nuevovehiculo()">Grabar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
